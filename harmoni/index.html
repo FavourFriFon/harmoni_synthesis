@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Lesson 2: metadata in the head -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Harmoni: services, announcements and the song library for the Kingdom Sanctuary Choir.">
+  <meta name="author" content="Favour">
+  <title>Harmoni | Kingdom Sanctuary Choir</title>
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+
+  <!-- Harmoni's fonts: Cinzel for the brand, Manrope for everything else -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+  <!-- Lesson 6: our own external stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER (Lesson 3: header + nav) ===================== -->
+  <header id="top">
+    <p class="brand">
+      <img src="images/logo.svg" alt="" width="52" height="52">
+      <span class="wordmark">HARMONI</span>
+    </p>
+    <p class="choir-name">Kingdom Sanctuary Choir</p>
+
+    <!-- Each button shows one "screen", like the tabs in the Harmoni app -->
+    <nav aria-label="Harmoni screens">
+      <button type="button" id="tab-home"     class="tab active" onclick="showScreen('home')">Home</button>
+      <button type="button" id="tab-songs"    class="tab"        onclick="showScreen('songs')">Songs</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===================== SCREEN 1: HOME ===================== -->
+    <section id="home" class="screen">
+
+      <!-- Lesson 4: images inside a figure with a caption -->
+      <figure class="hero">
+        <img src="images/choir.jpg" alt="Kingdom Sanctuary Choir members singing at Worship Night" width="1200" height="800">
+        <figcaption>Where we make music unto the Lord</figcaption>
+      </figure>
+
+      <h1>Welcome to Harmoni</h1>
+
+      <p class="part-picker">
+        <label for="my-part">I sing</label>
+        <select id="my-part" onchange="changePart()">
+          <option value="Soprano">Soprano</option>
+          <option value="Alto">Alto</option>
+          <option value="Tenor">Tenor</option>
+          <option value="Bass">Bass</option>
+        </select>
+      </p>
+
+      <h2>Upcoming services</h2>
+      <!-- Lesson 4: a table, because services are rows of the same kind of data -->
+      <div class="table-wrap">
+        <table class="services">
+          <caption id="services-caption">Register for the services you will sing at</caption>
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Service</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="services-body"></tbody>
+        </table>
+      </div>
+
+      <h2>Your songs <button type="button" class="link-btn" onclick="showScreen('songs')">Library</button></h2>
+      <div id="home-songs"></div>
+
+      <h2>Latest announcements</h2>
+      <div id="home-news"></div>
+    </section>
+
+
+    <!-- ===================== SCREEN 2: SONG LIBRARY ===================== -->
+    <section id="songs" class="screen hidden">
+
+      <!-- The list of songs -->
+      <div id="library-view">
+        <h1>Song Library</h1>
+
+        <p>
+          <label for="search" class="hidden-label">Search songs</label>
+          <input type="text" id="search" placeholder="Search songs, artists…" oninput="drawLibrary()" autocomplete="off">
+        </p>
+
+        <p class="filters">
+          <button type="button" id="filter-all"        class="chip active" onclick="setFilter('all')">All</button>
+          <button type="button" id="filter-mine"       class="chip"        onclick="setFilter('mine')">My Part</button>
+          <button type="button" id="filter-rehearsing" class="chip"        onclick="setFilter('rehearsing')">Rehearsing</button>
+          <button type="button" id="filter-new"        class="chip"        onclick="setFilter('new')">New</button>
+        </p>
+
+        <p id="library-count" class="muted"></p>
+        <div id="song-list"></div>
+
+        <!-- Lesson 5: form for music directors to add a song -->
+        <form id="song-form" onsubmit="return addSongFromForm()">
+          <fieldset>
+            <legend>Add a song to the library</legend>
+
+            <p>
+              <label for="song-title">Title</label>
+              <input type="text" id="song-title" required minlength="2" maxlength="60" autocomplete="off">
+            </p>
+            <p>
+              <label for="song-artist">Artist or composer</label>
+              <input type="text" id="song-artist" required maxlength="60" autocomplete="off">
+            </p>
+
+            <fieldset class="inner">
+              <legend>Voice parts</legend>
+              <input type="checkbox" id="part-soprano" value="Soprano" checked> <label for="part-soprano" class="inline">Soprano</label>
+              <input type="checkbox" id="part-alto"    value="Alto"    checked> <label for="part-alto"    class="inline">Alto</label>
+              <input type="checkbox" id="part-tenor"   value="Tenor"   checked> <label for="part-tenor"   class="inline">Tenor</label>
+              <input type="checkbox" id="part-bass"    value="Bass">            <label for="part-bass"    class="inline">Bass</label>
+            </fieldset>
+
+            <fieldset class="inner">
+              <legend>Status</legend>
+              <input type="radio" id="status-new"        name="status" value="New" checked> <label for="status-new"        class="inline">New</label>
+              <input type="radio" id="status-rehearsing" name="status" value="Rehearsing">  <label for="status-rehearsing" class="inline">Rehearsing</label>
+            </fieldset>
+
+            <p>
+              <label for="song-key">Key <span class="muted">(optional)</span></label>
+              <select id="song-key">
+                <option value="">Not set</option>
+                <option>C</option><option>D</option><option>E</option><option>F</option>
+                <option>G</option><option>A</option><option>B</option>
+                <option>B♭</option><option>E♭</option><option>A♭</option>
+              </select>
+            </p>
+            <p>
+              <label for="song-rehearsal">Next rehearsal <span class="muted">(optional)</span></label>
+              <input type="text" id="song-rehearsal" maxlength="40" placeholder="e.g. Thu 15 Oct, 7:00 PM">
+            </p>
+            <p>
+              <label for="song-notes">Notes for the choir <span class="muted">(optional)</span></label>
+              <textarea id="song-notes" rows="3" maxlength="300" placeholder="e.g. Take the bridge slowly. Sopranos carry the descant."></textarea>
+            </p>
+
+            <p><button type="submit">Add song</button></p>
+            <p><output id="song-message" aria-live="polite"></output></p>
+          </fieldset>
+        </form>
+      </div>
+
+      <!-- One song in detail (filled in by JavaScript) -->
+      <article id="song-detail" class="hidden"></article>
+    </section>
+
+
+  </main>
+
+  <footer>
+    <p>Harmoni &middot; Since 2026 &middot; Web Technologies synthesis project, built with HTML, CSS and JavaScript only.</p>
+    <p class="muted">Changes are kept only while this page is open. Refreshing resets everything.</p>
+  </footer>
+
+  <!-- Chapter 13: JavaScript in an external file, loaded last so all the elements exist -->
+  <script src="script.js"></script>
+</body>
+</html>

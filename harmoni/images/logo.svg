@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-130 -130 260 260" width="260" height="260">
+  <!-- Harmoni mark: two rotated squares (a diamond) around a serif H -->
+  <g fill="none" stroke="#2f88ff" stroke-width="10">
+    <rect x="-80" y="-80" width="160" height="160" rx="12" transform="rotate(45)"/>
+    <rect x="-60" y="-60" width="120" height="120" rx="9" transform="rotate(45)" stroke-opacity="0.55"/>
+  </g>
+  <text x="0" y="36" font-family="Cinzel, Georgia, 'Times New Roman', serif" font-size="104" font-weight="700" fill="#2f88ff" text-anchor="middle">H</text>
+</svg>
