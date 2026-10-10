@@ -1,12 +1,4 @@
 /*  Harmoni: script.js
-    -----------------------------------------------------------------
-    Uses only what we have covered (Nixon, chapters 13 and 14):
-      variables, strings, numbers, operators, string concatenation,
-      functions, arrays (new Array() + indexes), if / else, switch,
-      the ternary operator ?:, for and while loops, break / continue,
-      try...catch, parseInt(), toUpperCase(), the onclick event,
-      and the DOM (getElementById, .value, .checked, innerHTML).
-*/
 
 
 /* =================================================================
